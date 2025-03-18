@@ -26,7 +26,7 @@ This script is designed to scrape posts and comments from a LiveJournal blog. It
 * `concurrent.futures` (included with Python)
 * `logging` (included with Python)
 
-  See the [REQUIREMENTS](REQUIREMENTS) file for more information.
+  See the [REQUIREMENTS.TXT](REQUIREMENTS) file for more information.
 
 ## Installation
 1. Clone this repository to your local machine using `git clone https://github.com/your-username/livejournal-scraper.git`
