@@ -16,10 +16,15 @@ A Python script to scrape posts and comments from a LiveJournal blog.
 This script is designed to scrape posts and comments from a LiveJournal blog. It uses the `requests` and `BeautifulSoup` libraries to send HTTP requests to the blog and parse the HTML responses.
 
 ## Requirements
-* Python 3.6 or later
-* `requests` library (install with `pip install requests`)
-* `beautifulsoup4` library (install with `pip install beautifulsoup4`)
-* `xml.etree.ElementTree` library (included with Python)
+* `python` (version 3.6 or later)
+* `requests` (install with `pip install requests`)
+* `beautifulsoup4` (install with `pip install beautifulsoup4`)
+* `xml.etree.ElementTree` (included with Python)
+* `csv` (included with Python)
+* `re` (included with Python)
+* `datetime` (included with Python)
+* `concurrent.futures` (included with Python)
+* `logging` (included with Python)
 
 ## Installation
 1. Clone this repository to your local machine using `git clone https://github.com/your-username/livejournal-scraper.git`
@@ -32,8 +37,9 @@ This script is designed to scrape posts and comments from a LiveJournal blog. It
 ## Options
 * **Save all posts**: Save all posts from the blog to XML files.
 * **Save a specific number of posts**: Save a specific number of posts from the blog to XML files.
-* **Get all pages**: Get all pages of the blog and save them to XML files.
-* **Get one post**: Get a single post from the blog and save it to an XML file.
+* **Save one post**: Get a single post from the blog and save it to an XML file.
+* **Change LiveJournal Blog URL: Set a new base URL.
+* **Exit: Exit script
 
 ## Output
 The script will output the following files:
