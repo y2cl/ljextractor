@@ -735,7 +735,11 @@ def main():
         print("Select an option:")
         print("1. Save all posts")
         print("2. Save a specific number of posts")
-        option = input("Enter your choice (1/2): ")
+        print("3. Save one post")
+        print("4. Change LiveJournal Blog URL")
+        print("5. Exit")
+
+        option = input("Enter your choice (1/2/3/4/5): ")
 
         if option == "1":
             save_all_posts = True
@@ -753,6 +757,18 @@ def main():
                 except ValueError:
                     print("Invalid input. Please enter a positive integer.")
             break
+        elif option == "3":
+            save_all_posts = False
+            num_posts_to_save = 1
+            break
+        elif option == "4":
+            base_url = input("Enter the new base URL of the LiveJournal blog: ")
+            if base_url:
+                continue
+            else:
+                print("Invalid input. Please enter a valid URL.")
+        elif option == "5":
+            return
         else:
             print("Invalid option. Please try again.")
 
@@ -760,43 +776,38 @@ def main():
     scraper = LiveJournalScraper(base_url, save_all_posts, num_posts_to_save)
 
     # Get all pages or one post
+    if num_posts_to_save == 1:
+        post_url = input("Enter the URL of the post: ")
+        scraper.get_one_post(post_url)
+    else:
+        scraper.get_all_pages()
+
+    # Save the CSV file
+    if scraper.posts_data:
+        scraper.save_file()
+
+    csv_filename = f"livejournal_export_{datetime.now().strftime('%Y%m%d%H%M%S')}.csv"
+    with open(csv_filename, 'w', newline='') as csvfile:
+        fieldnames = ['Title', 'Date', 'XML File']
+        writer = csv.DictWriter(csvfile, fieldnames)
+        writer.writeheader()
+        for row in scraper.csv_rows:
+            writer.writerow(row)
+    logger.info(f"Saved {csv_filename}")
+
+    # Ask the user if they want to continue
     while True:
-        print("Select an option:")
-        print("1. Get all posts")
-        print("2. Get one post")
-        option = input("Enter your choice (1/2): ")
-
-        if option == "1":
-            scraper.get_all_pages()
-        elif option == "2":
-            post_url = input("Enter the URL of the post: ")
-            scraper.get_one_post(post_url)
+        cont = input("Do you want to continue? (y/n): ")
+        if cont.lower() == "y":
+            break
+        elif cont.lower() == "n":
+            return
         else:
-            print("Invalid option. Please try again.")
-            continue
-
-        # Save the CSV file
-        if scraper.posts_data:
-            scraper.save_file()
-
-        csv_filename = f"livejournal_export_{datetime.now().strftime('%Y%m%d%H%M%S')}.csv"
-        with open(csv_filename, 'w', newline='') as csvfile:
-            fieldnames = ['Title', 'Date', 'XML File']
-            writer = csv.DictWriter(csvfile, fieldnames)
-            writer.writeheader()
-            for row in scraper.csv_rows:
-                writer.writerow(row)
-        logger.info(f"Saved {csv_filename}")
-
-        # Ask the user if they want to continue
-        while True:
-            cont = input("Do you want to continue? (y/n): ")
-            if cont.lower() == "y":
-                break
-            elif cont.lower() == "n":
-                return
-            else:
-                print("Invalid input. Please enter y or n.")
+            print("Invalid input. Please enter y or n.")
 
 if __name__ == "__main__":
     main()
+
+# Created by J Horsley III
+# https://y2cl.net
+# https://github.com/y2cl/ljextractor
