@@ -51,7 +51,7 @@ If you would like to contribute to this project, please fork the repository and 
 ## License
 This project is licensed under the MIT License. 
 
------------------------------------
-## Created by J Horsley III
+________________________________________________________________________________________________________________
 
+##### Created by J Horsley III
 [http://y2cl.net](y2cl.net)
